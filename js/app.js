@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Card from './Card';
 import Headers from './Headers';
+import * as audio from './audio';
 
 class App extends React.Component {
   constructor(props) {
@@ -19,6 +20,11 @@ class App extends React.Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize.bind(this));
+    window.addEventListener('keypress', function(e) {
+      if (e.keyCode === 32) {
+        audio.play("countdown");
+      }
+    });
     let rows = 0;
     data.forEach(category => {
       if (category.questions.length > rows) {

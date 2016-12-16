@@ -74,6 +74,22 @@
 	
 	var _Headers2 = _interopRequireDefault(_Headers);
 	
+	var _audio = __webpack_require__(179);
+	
+	var audio = _interopRequireWildcard(_audio);
+	
+	function _interopRequireWildcard(obj) {
+	  if (obj && obj.__esModule) {
+	    return obj;
+	  } else {
+	    var newObj = {};if (obj != null) {
+	      for (var key in obj) {
+	        if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
+	      }
+	    }newObj.default = obj;return newObj;
+	  }
+	}
+	
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { default: obj };
 	}
@@ -121,6 +137,11 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      window.addEventListener('resize', this.handleResize.bind(this));
+	      window.addEventListener('keypress', function (e) {
+	        if (e.keyCode === 32) {
+	          audio.play("countdown");
+	        }
+	      });
 	      var rows = 0;
 	      data.forEach(function (category) {
 	        if (category.questions.length > rows) {
@@ -21829,16 +21850,9 @@
 	  _createClass(Card, [{
 	    key: 'clickHandler',
 	    value: function clickHandler(event) {
-	      var _this2 = this;
-	
 	      if (!this.state.completed) {
 	        if (this.state.view === 'points') {
 	          audio.play("flip");
-	          setTimeout(function () {
-	            if (_this2.state.view === "question") {
-	              audio.play("countdown");
-	            }
-	          }, 1800);
 	          this.setState({ view: 'question', flipping: true });
 	        } else if (this.state.view === 'question') {
 	          audio.stop("countdown");
@@ -21882,7 +21896,12 @@
 	      if (this.state.flipping) {
 	        className = className + ' flipping';
 	      }
-	      return _react2.default.createElement('div', { style: style, className: className, onClick: this.clickHandler.bind(this), onTransitionEnd: this.transitionEndHandler.bind(this) }, _react2.default.createElement('div', { className: 'card' }, _react2.default.createElement('div', { className: 'front' }, front), _react2.default.createElement('div', { className: 'back' }, _react2.default.createElement('span', { dangerouslySetInnerHTML: this.getLabelBack() }), _react2.default.createElement('img', { src: 'assets/img/react.svg' }))));
+	      return _react2.default.createElement('div', {
+	        style: style,
+	        className: className,
+	        onClick: this.clickHandler.bind(this),
+	        onTransitionEnd: this.transitionEndHandler.bind(this)
+	      }, _react2.default.createElement('div', { className: 'card' }, _react2.default.createElement('div', { className: 'front' }, front), _react2.default.createElement('div', { className: 'back' }, _react2.default.createElement('span', { dangerouslySetInnerHTML: this.getLabelBack() }), _react2.default.createElement('img', { src: 'assets/img/react.svg' }))));
 	    }
 	  }]);
 	
