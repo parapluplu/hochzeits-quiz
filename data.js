@@ -9,13 +9,13 @@ var data = [
       },
       {
         "points": 200,
-        "question": "The meaning of the word \"Immanuel\".",
-        "answer": "What is \"God With Us\"?"
+        "question": "The country Jesus' family escaped to after they received a death threat over Jesus.",
+        "answer": "Where is Egypt?"
       },
       {
         "points": 300,
-        "question": "The country Jesus' family escaped to after they received a death threat over Jesus.",
-        "answer": "Where is Egypt?"
+        "question": "Ritual Jesus had to go through when he was just eight days old.",
+        "answer": "What is circumcision?"
       },
       {
         "points": 400,
@@ -24,7 +24,7 @@ var data = [
       },
       {
         "points": 500,
-        "question": "The Emperor at the time of Jesus' birth.",
+        "question": "The king at the time of Jesus' birth.",
         "answer": "Who is Augustus?"
       }
     ]
@@ -74,7 +74,7 @@ var data = [
       },
       {
         "points": 300,
-        "question": "How did the Wise Men know that Jesus was born?",
+        "question": "How did the Wise Men know where to find Jesus?",
         "answer": "What is they saw a star in the East?"
       },
       {
@@ -86,6 +86,36 @@ var data = [
         "points": 500,
         "question": "How many Wise Men came to visit Jesus?",
         "answer": "What is it doesn't say?"
+      }
+    ]
+  },
+  {
+    "category": "Names, Angels, & Prophets",
+    "questions": [
+      {
+        "points": 100,
+        "question": "The name Immanuel means _____.",
+        "answer": "What is \"God is with us\"?"
+      },
+      {
+        "points": 200,
+        "question": "The name of the angel who appeared to Mary.",
+        "answer": "Who is Gabriel?"
+      },
+      {
+        "points": 300,
+        "question": "This baby was born to a relative of Mary about six months before Jesus was born.",
+        "answer": "Who is John the Baptist?"
+      },
+      {
+        "points": 400,
+        "question": "This prophet said, \"Behold, a virgin shall be with child, and shall bring forth a son\".",
+        "answer": "Who is Isaiah?"
+      },
+      {
+        "points": 500,
+        "question": "This priest said he would not die until he saw the Lord's Messiah.",
+        "answer": "Who is Simeon?"
       }
     ]
   },

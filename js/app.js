@@ -33,12 +33,10 @@ class App extends React.Component {
   }
 
   render() {
-    let headerHeight = this.state.windowWidth > 640
-        ? 60
-        : 32,
-      cardWidth = this.state.windowWidth / this.state.cols,
-      cardHeight = (this.state.windowHeight - headerHeight) / this.state.rows,
-      cards = [];
+    let headerHeight = this.state.windowWidth > 640 ? 100 : 40,
+        cardWidth = this.state.windowWidth / this.state.cols,
+        cardHeight = (this.state.windowHeight - headerHeight) / this.state.rows,
+        cards = [];
 
     this.state.data.forEach((category, categoryIndex) => {
       let left = categoryIndex * cardWidth;
@@ -48,7 +46,8 @@ class App extends React.Component {
     });
     return (
       <div>
-        <Headers data={this.state.data} headerWidth={cardWidth}/> {cards}
+        <Headers data={this.state.data} headerWidth={cardWidth} />
+        <div className="cardContainer">{cards}</div>
       </div>
     );
   }

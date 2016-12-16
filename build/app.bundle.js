@@ -137,7 +137,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var headerHeight = this.state.windowWidth > 640 ? 60 : 32,
+	      var headerHeight = this.state.windowWidth > 640 ? 100 : 40,
 	          cardWidth = this.state.windowWidth / this.state.cols,
 	          cardHeight = (this.state.windowHeight - headerHeight) / this.state.rows,
 	          cards = [];
@@ -148,7 +148,7 @@
 	          cards.push(_react2.default.createElement(_Card2.default, { left: left, top: questionIndex * cardHeight + headerHeight, height: cardHeight, width: cardWidth, question: question, key: categoryIndex + '-' + questionIndex }));
 	        });
 	      });
-	      return _react2.default.createElement('div', null, _react2.default.createElement(_Headers2.default, { data: this.state.data, headerWidth: cardWidth }), ' ', cards);
+	      return _react2.default.createElement('div', null, _react2.default.createElement(_Headers2.default, { data: this.state.data, headerWidth: cardWidth }), _react2.default.createElement('div', { className: 'cardContainer' }, cards));
 	    }
 	  }]);
 	
@@ -21980,9 +21980,7 @@
 	  _createClass(Headers, [{
 	    key: 'render',
 	    value: function render() {
-	      var style = {
-	        width: this.props.headerWidth
-	      },
+	      var style = { width: this.props.headerWidth },
 	          headers = [];
 	
 	      this.props.data.forEach(function (category, index) {

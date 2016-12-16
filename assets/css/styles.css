@@ -20,12 +20,16 @@ p {
   display: flex;
   -webkit-align-items: center;
   align-items: center;
-  height: 60px;
+  height: 100px;
 }
 
 .headers>.header {
   display: inline-block;
   text-align: center;
+}
+
+.cardContainer {
+  clear: both;
 }
 
 .flipper {
@@ -163,7 +167,7 @@ code {
 
 @media screen and (min-width: 641px) and (max-width: 1024px) {
   .headers {
-    font-size: 20px;
+    font-size: 18px;
   }
   .card>.front {
     font-size: 36px;
@@ -195,8 +199,8 @@ code {
 
 @media screen and (min-width: 0) and (max-width: 640px) {
   .headers {
-    font-size: 14px;
-    height: 32px;
+    font-size: 12px;
+    height: 40px;
   }
   .card>.front {
     font-size: 24px;
