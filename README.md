@@ -1,5 +1,7 @@
 # React Jeopardy
 
+Hosted version [http://sharynneazhar.com/react-jeopardy/](http://sharynneazhar.com/react-jeopardy/).
+
 ## Build the App
 
 If you want modify the app and create you own build:
