@@ -50,6 +50,7 @@ class App extends React.Component {
         cards.push(<Card left={left} top={questionIndex * cardHeight + headerHeight} height={cardHeight} width={cardWidth} question={question} key={categoryIndex + '-' + questionIndex}/>);
       })
     });
+    
     return (
       <div>
         <Headers data={this.state.data} headerWidth={cardWidth} />
