@@ -1,5 +1,4 @@
 import React from 'react';
-import * as audio from './audio';
 
 class Card extends React.Component {
   constructor(props) {
@@ -13,13 +12,10 @@ class Card extends React.Component {
   clickHandler(event) {
     if (!this.state.completed) {
       if (this.state.view === 'points') {
-        audio.play("flip");
         this.setState({view: 'question', flipping: true});
       } else if (this.state.view === 'question') {
-        audio.stop("countdown");
         this.setState({view: 'answer'});
       } else {
-        audio.play("flipBack");
         this.setState({view: 'points', completed: true, flipping: true});
       }
     }
@@ -61,7 +57,7 @@ class Card extends React.Component {
     return (
       <div
         style={style}
-        className={className}
+        className={className + ' ' + this.props.className}
         onClick={this.clickHandler.bind(this)}
         onTransitionEnd={this.transitionEndHandler.bind(this)}
       >

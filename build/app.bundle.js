@@ -70,26 +70,6 @@
 	
 	var _Card2 = _interopRequireDefault(_Card);
 	
-	var _Headers = __webpack_require__(186);
-	
-	var _Headers2 = _interopRequireDefault(_Headers);
-	
-	var _audio = __webpack_require__(185);
-	
-	var audio = _interopRequireWildcard(_audio);
-	
-	function _interopRequireWildcard(obj) {
-	  if (obj && obj.__esModule) {
-	    return obj;
-	  } else {
-	    var newObj = {};if (obj != null) {
-	      for (var key in obj) {
-	        if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
-	      }
-	    }newObj.default = obj;return newObj;
-	  }
-	}
-	
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { default: obj };
 	}
@@ -122,8 +102,9 @@
 	
 	    _this.state = {
 	      windowWidth: window.innerWidth,
-	      windowHeight: window.innerHeight,
-	      data: []
+	      windowHeight: window.innerHeight - 100,
+	      cards: [],
+	      showFinal: false
 	    };
 	    return _this;
 	  }
@@ -131,24 +112,41 @@
 	  _createClass(App, [{
 	    key: 'handleResize',
 	    value: function handleResize(event) {
-	      this.setState({ windowWidth: window.innerWidth, windowHeight: window.innerHeight });
+	      this.setState({
+	        windowWidth: window.innerWidth,
+	        windowHeight: window.innerHeight - 100
+	      });
 	    }
 	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
+	    key: 'handleFinal',
+	    value: function handleFinal(event) {
+	      if (event.which === 70) {
+	        this.setState({ showFinal: true });
+	      }
+	    }
+	  }, {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      var finalJeopardy = data.splice(0, 1);
+	      var normalCards = data;
+	
+	      window.addEventListener('keypress', this.handleFinal.bind(this));
+	
 	      window.addEventListener('resize', this.handleResize.bind(this));
-	      window.addEventListener('keypress', function (e) {
-	        if (e.keyCode === 32) {
-	          audio.play("countdown");
-	        }
-	      });
 	      var rows = 0;
-	      data.forEach(function (category) {
+	
+	      normalCards.forEach(function (category) {
 	        if (category.questions.length > rows) {
 	          rows = category.questions.length;
 	        }
 	      });
-	      this.setState({ data: data, rows: rows, cols: data.length });
+	
+	      this.setState({
+	        cards: normalCards,
+	        rows: rows,
+	        cols: normalCards.length,
+	        finalJeopardy: finalJeopardy[0]
+	      });
 	    }
 	  }, {
 	    key: 'componentWillUnmount',
@@ -158,19 +156,36 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var headerHeight = this.state.windowWidth > 640 ? 100 : 40,
+	      var headerHeight = this.state.windowWidth > 640 ? 150 : 40,
 	          cardWidth = this.state.windowWidth / this.state.cols,
 	          cardHeight = (this.state.windowHeight - headerHeight) / this.state.rows,
+	          headers = [],
 	          cards = [];
 	
-	      this.state.data.forEach(function (category, categoryIndex) {
+	      this.state.cards.forEach(function (category, categoryIndex) {
+	        headers.push(_react2.default.createElement('span', { className: 'header', key: categoryIndex, style: { width: cardWidth - 30 } }, category.category));
+	
 	        var left = categoryIndex * cardWidth;
 	        category.questions.forEach(function (question, questionIndex) {
-	          cards.push(_react2.default.createElement(_Card2.default, { left: left, top: questionIndex * cardHeight + headerHeight, height: cardHeight, width: cardWidth, question: question, key: categoryIndex + '-' + questionIndex }));
+	          cards.push(_react2.default.createElement(_Card2.default, {
+	            key: categoryIndex + '-' + questionIndex,
+	            left: left,
+	            top: questionIndex * cardHeight + headerHeight,
+	            height: cardHeight,
+	            width: cardWidth,
+	            question: question
+	          }));
 	        });
 	      });
 	
-	      return _react2.default.createElement('div', null, _react2.default.createElement(_Headers2.default, { data: this.state.data, headerWidth: cardWidth }), _react2.default.createElement('div', { className: 'cardContainer' }, cards));
+	      return _react2.default.createElement('div', null, _react2.default.createElement('div', { className: 'headers' }, headers), _react2.default.createElement('div', { className: 'cardContainer' }, this.state.showFinal && _react2.default.createElement(_Card2.default, {
+	        className: 'finalJeopardy',
+	        left: cardWidth,
+	        top: cardHeight + headerHeight,
+	        height: cardHeight,
+	        width: cardWidth,
+	        question: this.state.finalJeopardy.questions[0]
+	      }), cards));
 	    }
 	  }]);
 	
@@ -22039,22 +22054,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _audio = __webpack_require__(185);
-	
-	var audio = _interopRequireWildcard(_audio);
-	
-	function _interopRequireWildcard(obj) {
-	  if (obj && obj.__esModule) {
-	    return obj;
-	  } else {
-	    var newObj = {};if (obj != null) {
-	      for (var key in obj) {
-	        if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
-	      }
-	    }newObj.default = obj;return newObj;
-	  }
-	}
-	
 	function _interopRequireDefault(obj) {
 	  return obj && obj.__esModule ? obj : { default: obj };
 	}
@@ -22097,13 +22096,10 @@
 	    value: function clickHandler(event) {
 	      if (!this.state.completed) {
 	        if (this.state.view === 'points') {
-	          audio.play("flip");
 	          this.setState({ view: 'question', flipping: true });
 	        } else if (this.state.view === 'question') {
-	          audio.stop("countdown");
 	          this.setState({ view: 'answer' });
 	        } else {
-	          audio.play("flipBack");
 	          this.setState({ view: 'points', completed: true, flipping: true });
 	        }
 	      }
@@ -22143,7 +22139,7 @@
 	      }
 	      return _react2.default.createElement('div', {
 	        style: style,
-	        className: className,
+	        className: className + ' ' + this.props.className,
 	        onClick: this.clickHandler.bind(this),
 	        onTransitionEnd: this.transitionEndHandler.bind(this)
 	      }, _react2.default.createElement('div', { className: 'card' }, _react2.default.createElement('div', { className: 'front' }, front), _react2.default.createElement('div', { className: 'back' }, _react2.default.createElement('span', { dangerouslySetInnerHTML: this.getLabelBack() }), _react2.default.createElement('img', { src: 'assets/img/react.svg' }))));
@@ -22156,111 +22152,6 @@
 	;
 	
 	exports.default = Card;
-
-/***/ }),
-/* 185 */
-/***/ (function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var sounds = {};
-	sounds.flip = new Audio("assets/audio/card-flip.mp3");
-	sounds.flipBack = new Audio("assets/audio/card-flip-back.mp3");
-	sounds.countdown = new Audio("assets/audio/jeopardy-theme.mp3");
-	
-	var play = exports.play = function play(sound) {
-	  if (sounds[sound]) {
-	    sounds[sound].currentTime = 0;
-	    sounds[sound].play();
-	  }
-	};
-	
-	var stop = exports.stop = function stop(sound) {
-	  if (sounds[sound]) {
-	    sounds[sound].pause();
-	  }
-	};
-
-/***/ }),
-/* 186 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () {
-	  function defineProperties(target, props) {
-	    for (var i = 0; i < props.length; i++) {
-	      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if ("value" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);
-	    }
-	  }return function (Constructor, protoProps, staticProps) {
-	    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;
-	  };
-	}();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) {
-	  return obj && obj.__esModule ? obj : { default: obj };
-	}
-	
-	function _classCallCheck(instance, Constructor) {
-	  if (!(instance instanceof Constructor)) {
-	    throw new TypeError("Cannot call a class as a function");
-	  }
-	}
-	
-	function _possibleConstructorReturn(self, call) {
-	  if (!self) {
-	    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-	  }return call && ((typeof call === "undefined" ? "undefined" : _typeof(call)) === "object" || typeof call === "function") ? call : self;
-	}
-	
-	function _inherits(subClass, superClass) {
-	  if (typeof superClass !== "function" && superClass !== null) {
-	    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : _typeof(superClass)));
-	  }subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } });if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-	}
-	
-	var Headers = function (_React$Component) {
-	  _inherits(Headers, _React$Component);
-	
-	  function Headers() {
-	    _classCallCheck(this, Headers);
-	
-	    return _possibleConstructorReturn(this, (Headers.__proto__ || Object.getPrototypeOf(Headers)).apply(this, arguments));
-	  }
-	
-	  _createClass(Headers, [{
-	    key: 'render',
-	    value: function render() {
-	      var style = { width: this.props.headerWidth },
-	          headers = [];
-	
-	      this.props.data.forEach(function (category, index) {
-	        return headers.push(_react2.default.createElement('span', { className: 'header', style: style, key: index }, category.category));
-	      });
-	
-	      return _react2.default.createElement('div', { className: 'headers' }, headers);
-	    }
-	  }]);
-	
-	  return Headers;
-	}(_react2.default.Component);
-	
-	;
-	
-	exports.default = Headers;
 
 /***/ })
 /******/ ]);
