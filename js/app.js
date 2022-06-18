@@ -10,6 +10,7 @@ class App extends React.Component {
       windowHeight: window.innerHeight - 100,
       cards: [],
       showFinal: false,
+      score: 0,
     };
   }
 
@@ -46,11 +47,34 @@ class App extends React.Component {
       rows: rows,
       cols: normalCards.length,
       finalJeopardy: finalJeopardy[0],
+      score: 0
     });
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
+  }
+
+  updateScore(points) {
+    // cards: this.state.cards,
+    // rows: this.state.rows,
+    // cols: this.state.cols,
+    // finalJeopardy: this.state.finalJeopardy,
+    this.setState({
+      score: this.state.score + points
+    })
+    console.log("Score")
+    console.log(this.state.score)
+  }
+
+  getScore() {
+    return {__html: this.state.score}
+  }
+
+  handleChange() {
+    this.setState({
+      score: this.state.score
+    });
   }
 
   render() {
@@ -68,9 +92,11 @@ class App extends React.Component {
       );
 
       let left = categoryIndex * cardWidth;
+
       category.questions.forEach((question, questionIndex) => {
         cards.push(
           <Card
+            app={this}
             key={categoryIndex + '-' + questionIndex}
             left={left}
             top={questionIndex * cardHeight + headerHeight}
@@ -82,18 +108,13 @@ class App extends React.Component {
       })
     });
 
+    console.log("Render")
+    console.log(this.state.score)
     return (
       <div>
+        <div>{this.state.score}</div>
         <div className='headers'>{headers}</div>
         <div className="cardContainer">
-          {this.state.showFinal && <Card
-            className="finalJeopardy"
-            left={cardWidth}
-            top={cardHeight + headerHeight}
-            height={cardHeight}
-            width={cardWidth}
-            question={this.state.finalJeopardy.questions[0]}
-          />}
           {cards}
         </div>
       </div>
