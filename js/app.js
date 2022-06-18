@@ -112,7 +112,7 @@ class App extends React.Component {
     console.log(this.state.score)
     return (
       <div>
-        <div>{this.state.score}</div>
+        <div>Total Score: {this.state.score}</div>
         <div className='headers'>{headers}</div>
         <div className="cardContainer">
           {cards}
